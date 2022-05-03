@@ -22,6 +22,22 @@ export async function getPokemonRandom(){
 
 }
 
+export async function getPokemon(id){
+
+    const url = process.env.VUE_APP_URL_API; 
+
+    const options = {
+        method : "GET",
+        headers: { "Content-Type": "application/json", }
+    }
+
+    const response = await fetch(`${url}/pokemon/${id}`,options)
+    const result = await response.json();
+
+    return result;
+
+}
+
 export async function getPokemonName(id){
     const url = process.env.VUE_APP_URL_API; 
 

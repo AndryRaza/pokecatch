@@ -4,17 +4,18 @@
       >Herbe
     </v-btn>
     <p v-if="showTimer" class="text-center" id="timer">{{ timer }}</p>
+        <div v-if="alreadyCaught" class="pokeball_"></div>
     <div class="d-flex align-center h-100">
       <div v-if="caught" class="pokeball pokeball-animated"></div>
+      <v-img
+        :src="spritePokemon"
+        :lazy-src="spritePokemon"
+        class="img-fluid"
+        contain
+        height="300"
+      />
     </div>
 
-    <v-img
-      :src="spritePokemon"
-      :lazy-src="spritePokemon"
-      class="img-fluid"
-      contain
-      height="300"
-    />
     <p class="px-14">Écrire son nom :</p>
     <v-text-field
       type="text"
@@ -34,6 +35,7 @@ import {
   random,
   getPokemonName,
 } from "../service/pokemonService";
+import { savePokemon, getTrainersPokemons } from "../service/trainerService";
 
 export default {
   name: "PokeGame",
@@ -48,9 +50,15 @@ export default {
       idPokemon: null,
       realNamePokemon: null,
       caught: false,
+      trainerspokemon: [],
+      alreadyCaught : false
     };
   },
-  mounted() {},
+  mounted() {
+    getTrainersPokemons(1).then((res) => {
+      this.trainerspokemon = res;
+    });
+  },
   methods: {
     pokemonAppearance(str) {
       // this.spritePokemon = res.sprites.front_default;
@@ -71,6 +79,7 @@ export default {
         this.pokemonAppearance(res.sprites.front_default);
         this.functimer();
         this.idPokemon = res.id;
+        this.alreadyCaught = !this.trainerspokemon.includes(this.idPokemon)
         getPokemonName(res.id).then((name) => {
           this.realNamePokemon = name;
         });
@@ -111,6 +120,7 @@ export default {
         ) {
           this.namePokemon = "";
           this.caught = true;
+          savePokemon(1, this.idPokemon);
           setTimeout(() => {
             this.caught = false;
           }, 5000);
@@ -126,6 +136,11 @@ export default {
 </script>
 
 <style>
+#game{
+  position: relative;
+}
+
+
 #timer {
   font-size: 30px;
 }
@@ -198,5 +213,54 @@ export default {
   to {
     transform: none;
   }
+}
+
+.pokeball_ {
+  position: absolute;
+  top:44px;
+  left:43%;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin: 20px;
+  border: 6px solid #ccc;
+  border-radius: 50%;
+  background-image: -moz-radial-gradient(
+      40% 40%,
+      circle,
+      rgba(0, 0, 0, 0.1) 40%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    -moz-linear-gradient(-90deg, #f33 45%, #333 45%, #3f3f3f 50%, #333 55%, #fff
+          55%);
+  background-image: -webkit-radial-gradient(
+      40% 40%,
+      circle,
+      rgba(0, 0, 0, 0.1) 40%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    -webkit-linear-gradient(-90deg, #f33 45%, #333 45%, #3f3f3f 50%, #333 55%, #fff
+          55%);
+}
+
+.pokeball_:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 6;
+  width: -50%;
+  height: -50%;
+  border-radius: 50%;
+}
+
+.pokeball_:after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: 94%;
+  height: 10%;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 45% 3%;
 }
 </style>
