@@ -8,6 +8,7 @@
     <div class="d-flex align-center h-100">
       <div v-if="caught" class="pokeball pokeball-animated"></div>
       <v-img
+        v-else
         :src="spritePokemon"
         :lazy-src="spritePokemon"
         class="img-fluid"
@@ -24,7 +25,7 @@
       v-on:keyup.enter="submit()"
     />
     <div class="px-14 d-flex flex-row-reverse">
-      <v-btn color="blue" v-on:click="submit()">Valider</v-btn>
+      <v-btn color="blue" v-on:click="submit()">Attraper</v-btn>
     </div>
   </v-container>
 </template>
@@ -79,16 +80,16 @@ export default {
         this.pokemonAppearance(res.sprites.front_default);
         this.functimer();
         this.idPokemon = res.id;
-        this.alreadyCaught = !this.trainerspokemon.includes(this.idPokemon)
+        this.alreadyCaught = this.trainerspokemon.includes(this.idPokemon)
         getPokemonName(res.id).then((name) => {
-          this.realNamePokemon = name;
+          this.realNamePokemon = name[0];
         });
       });
     },
     stopcore(from) {
       this.spritePokemon = "";
       this.namePokemon = "";
-
+      this.alreadyCaught = false;
       if (from === "timer") {
         clearInterval(this.intervaltimer);
         this.showTimer = false;

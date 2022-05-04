@@ -27,7 +27,7 @@ pokemonRouter.get("/:idpokemon",getPokemon)
  * @swagger
  * /api/pokemon/{idPokemon}/french: 
  *   get:
- *     summary : Get a pokemon name in french
+ *     summary : Get a pokemon name and its description in french
  *     parameters: 
  *          - name : idPokemon
  *            in : path
@@ -37,7 +37,7 @@ pokemonRouter.get("/:idpokemon",getPokemon)
  *     description: Get name french pokemon
  *     responses:
  *       200:
- *         description: Return string name
+ *         description: Return array [nom,description,sprite]
  */
 pokemonRouter.get("/:idPokemon/french",getPokemonInFrench)
 

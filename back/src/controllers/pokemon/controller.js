@@ -1,29 +1,29 @@
 import Pokedex from 'pokedex-promise-v2';
 
 const options = {
-    protocol: 'https',
-    hostName: process.env.SERVER_URL,
-    versionPath: '/api/v2/',
-    cacheLimit: 100 * 1000, // 100s
-    timeout: 5 * 1000 // 5s
-  }
+  protocol: 'https',
+  hostName: process.env.SERVER_URL,
+  versionPath: '/api/v2/',
+  cacheLimit: 100 * 1000, // 100s
+  timeout: 5 * 1000 // 5s
+}
 
 const P = new Pokedex(options);
 
-export async function getPokemon (request,response) {
+export async function getPokemon(request, response) {
 
-    const idPokemon = request.params.idpokemon
-    P.getPokemonByName(idPokemon)
+  const idPokemon = request.params.idpokemon
+  P.getPokemonByName(idPokemon)
     .then((res) => {
-        const result = {
-          "id":res.id,
-          "name" : res.name,
-          "abilities" : res.abilities,
-          "moves":res.moves,
-          "sprites": res.sprites,
-          "types" : res.types
-        }
-        response.status(200).json(result)
+      const result = {
+        "id": res.id,
+        "name": res.name,
+        "abilities": res.abilities,
+        "moves": res.moves,
+        "sprites": res.sprites,
+        "types": res.types
+      }
+      response.status(200).json(result)
     })
     .catch((error) => {
       response.status(403).send(error)
@@ -31,12 +31,40 @@ export async function getPokemon (request,response) {
     });
 }
 
+async function getPokemonSprite(id) {
 
-export async function getPokemonInFrench(request,response){
+  P.getPokemonByName(id)
+    .then((res) => {
+      const result = {
+        "id": res.id,
+        "name": res.name,
+        "abilities": res.abilities,
+        "moves": res.moves,
+        "sprites": res.sprites,
+        "types": res.types
+      }
+      return (res)
+    })
+    .catch((error) => {
+      console.log(error)
+
+    });
+}
+
+export async function getPokemonInFrench(request, response) {
 
   const idPokemon = request.params.idPokemon
 
-  P.getPokemonSpeciesByName(idPokemon).then(res=>{
-    response.status(200).json(res.names.filter(pokeAPINAME => pokeAPINAME.language.name === 'fr')[0].name)
+
+  P.getPokemonSpeciesByName(idPokemon).then(res => {
+    P.getPokemonByName(idPokemon)
+      .then((r) => {
+        let result = [res.names.filter(pokeAPINAME => pokeAPINAME.language.name === 'fr')[0].name, res.flavor_text_entries.filter(p => p.language.name === 'fr')[0].flavor_text,r.sprites.front_default]
+        response.status(200).json(result)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+
   })
 }
