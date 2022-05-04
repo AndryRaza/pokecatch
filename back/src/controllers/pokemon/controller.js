@@ -31,30 +31,9 @@ export async function getPokemon(request, response) {
     });
 }
 
-async function getPokemonSprite(id) {
-
-  P.getPokemonByName(id)
-    .then((res) => {
-      const result = {
-        "id": res.id,
-        "name": res.name,
-        "abilities": res.abilities,
-        "moves": res.moves,
-        "sprites": res.sprites,
-        "types": res.types
-      }
-      return (res)
-    })
-    .catch((error) => {
-      console.log(error)
-
-    });
-}
-
 export async function getPokemonInFrench(request, response) {
 
   const idPokemon = request.params.idPokemon
-
 
   P.getPokemonSpeciesByName(idPokemon).then(res => {
     P.getPokemonByName(idPokemon)

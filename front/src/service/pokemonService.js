@@ -1,3 +1,5 @@
+import { options,url } from "../utils/var";
+
 export  function random(min,max)
 {
     min = Math.ceil(min);
@@ -8,13 +10,6 @@ export  function random(min,max)
 
 export async function getPokemonRandom(){
 
-    const url = process.env.VUE_APP_URL_API; 
-
-    const options = {
-        method : "GET",
-        headers: { "Content-Type": "application/json", }
-    }
-
     const response = await fetch(`${url}/pokemon/${random(1,500)}`,options)
     const result = await response.json();
 
@@ -24,13 +19,6 @@ export async function getPokemonRandom(){
 
 export async function getPokemon(id){
 
-    const url = process.env.VUE_APP_URL_API; 
-
-    const options = {
-        method : "GET",
-        headers: { "Content-Type": "application/json", }
-    }
-
     const response = await fetch(`${url}/pokemon/${id}`,options)
     const result = await response.json();
 
@@ -39,12 +27,6 @@ export async function getPokemon(id){
 }
 
 export async function getPokemonName(id){
-    const url = process.env.VUE_APP_URL_API; 
-
-    const options = {
-        method : "GET",
-        headers: { "Content-Type": "application/json", }
-    }
 
     const response = await fetch(`${url}/pokemon/${id}/french`,options)
     const result = await response.json();

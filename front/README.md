@@ -1,27 +1,20 @@
-# front
+# Front PokeCatch
 
-## Project setup
-```
-npm install
-```
+Visuel du jeu
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Installation & lancement (en dev)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### SHELL CMD
 
-### Lints and fixes files
-```
-npm run lint
-```
+- npm install
+- npm run serve
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Packages 
+
+- vuetify
+- vue-router
+
+## Ressources 
 
 https://codepen.io/ChrisHuie/pen/PmNgVG
 
