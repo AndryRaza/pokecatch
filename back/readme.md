@@ -26,8 +26,8 @@ Retrouvez toutes les routes disponibles de l'API ici : '{url} + /api/api-docs '
 ## Exemples Queries 
 
 - Chercher un pokemon
-<textarea rows="15" cols="90" readonly style="resize:none">
-query MyQuery {
+
+```query MyQuery { 
   pokemon_v2_pokemonspecies_by_pk(id: 10) {
     name
     id
@@ -41,11 +41,11 @@ query MyQuery {
     }
   }
 }
+```
 
-</textarea>
 
 - Avoir les noms en francais
-<textarea rows="15" cols="90" readonly style="resize:none">
+```
 query MyQuery {
   pokemon_v2_pokemonspeciesname_by_pk(id: 95) {
     name
@@ -59,7 +59,7 @@ query MyQuery {
     }
   }
 }
-</textarea>
+```
 ## Ressources 
 
 API Pokemon : https://pokeapi.co/
