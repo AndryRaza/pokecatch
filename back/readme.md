@@ -27,7 +27,8 @@ Retrouvez toutes les routes disponibles de l'API ici : '{url} + /api/api-docs '
 
 - Chercher un pokemon
 
-```query MyQuery { 
+```
+query MyQuery { 
   pokemon_v2_pokemonspecies_by_pk(id: 10) {
     name
     id
